@@ -40,7 +40,4 @@ class UpdatesMessenger < RedmineMessenger::Base
     end
     responce
   end
-
-  private
-
 end
