@@ -29,10 +29,10 @@ class IssuesMessenger < RedmineMessenger::Base
 
   def issues(messenger, params = {})
     unless params[:name].blank?
-      issues = Issue.find(:all, :include => [:status], :conditions => ["lower(issues.subject) like lower(?) and issue_statuses.is_closed = ?", "%#{params[:name]}%", false])
+      issues = Issue.find(:all, :include => [:status], :conditions => ["LOWER(issues.subject) LIKE lower(?) AND issue_statuses.is_closed = ?", "%#{params[:name]}%", false])
       return ll(messenger.language, :messenger_command_issues_not_found, :command => params[:name]) if issues.empty?
     else
-      issues = Issue.find(:all, :include => [:status], :conditions => ["issues.assigned_to_id = ? and issue_statuses.is_closed = ?", messenger.user_id, false])
+      issues = Issue.find(:all, :include => [:status], :conditions => ["issues.assigned_to_id = ? AND issue_statuses.is_closed = ?", messenger.user_id, false])
       return ll(messenger.language, :messenger_command_issues_assigned_not_found) if issues.empty?
     end
 
