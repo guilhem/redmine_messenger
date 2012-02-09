@@ -31,8 +31,9 @@ module RedmineMessenger
     # Method is called by messenger implementations.
     def receive_message(messenger_id, body)
       received = false
+      body.downcase! # commands should be case-insensitive because some IM clients capitalize!
       @message_handlers.each do |object, method, options|
-        if options[:pattern].nil? or options[:pattern] =~ body 
+        if options[:pattern].nil? or options[:pattern] =~ body
           received = true
           object.send(method, messenger_id, body)
         end        
@@ -66,7 +67,10 @@ module RedmineMessenger
       private
 
       # Reads the configuration from config/messenger.yml.
-      def load_config(config_file = "#{RAILS_ROOT}/config/messenger.yml")
+      def load_config(config_file = File.join(ENV['RAILS_ETC'], 'messenger.yml'))
+        #config_file = "#{RAILS_ROOT}/config/messenger.yml" unless File.exists?(config_file)
+        # we don't want to fallback to a default configuration, each bot should explicitly
+        # define its credentials in order not to collide logins
         unless File.exists?(config_file)
           raise "Config not found: #{config_file}"
         end
