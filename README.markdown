@@ -26,7 +26,9 @@ If you are not running the multi-instance redmine for Debian/Ubuntu so most prob
 Create jabber account for Redmine user and set its configuration in messenger.yml.
 
     $ vim config/messenger.yml
-Or
+    
+Or if you are using multi-bot configuration:
+
     $ vim /etc/redmine/<INSTANCE-NAME>/messenger.yml
 
 Migrate database.
@@ -37,10 +39,10 @@ Run Redmine and have a fun!
 
 ## Translations
 
-- en by myself
+- en by mszczytowski
 - es by smlghst
 - ru by akrus
-- pl by myself
+- pl by mszczytowski
 - de by Michael Jahn
 - pt-BR by Diego Oliveira
 
