@@ -18,9 +18,16 @@ Copy default messenger.yml to your config folder.
 
     $ cp vendor/plugins/redmine_messenger/config/messenger.yml config/
 
+Note: The previous line does not work any more. You have to copy messenger.yml to the corresponding redmine instance configuration. This is to allow for multi-bots under Debian/Ubuntu multi-instance installations.
+If you are not running the multi-instance redmine for Debian/Ubuntu so most probably you don't want this multi-bot behavior. Revert back the configuration loading in lib/redmine_messenger/messenger.rb in function load_config 
+
+    $ cp vendor/plugins/redmine_messenger/config/messenger.yml /etc/redmine/<INSTANCE-NAME>/
+
 Create jabber account for Redmine user and set its configuration in messenger.yml.
 
     $ vim config/messenger.yml
+Or
+    $ vim /etc/redmine/<INSTANCE-NAME>/messenger.yml
 
 Migrate database.
 
