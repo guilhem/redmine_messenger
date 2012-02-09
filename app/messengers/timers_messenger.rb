@@ -2,6 +2,11 @@ class IssuesMessenger < RedmineMessenger::Base
 
   unless defined?(Redmine::I18n)
     include MessengerI18nPatch
+  else
+    def ll(lang, str, value=nil)
+      value[:locale] = lang.to_s.gsub(%r{(.+)\-(.+)$}) { "#{$1}-#{$2.upcase}" }
+      I18n.t(str.to_s, value)
+    end
   end
 
   register_handler :pause do |cmd|
@@ -59,7 +64,7 @@ class IssuesMessenger < RedmineMessenger::Base
   
   def start(messenger, params = {})
     if issue = Issue.find_by_id(params[:issue_id])    
-      return ll(messenger.language, :messenger_command_issue_not_assignable_user) unless issue.assignable_users.include?(messenger.user)
+      return ll(messenger.language, :messenger_command_issue_not_assignable_user, {}) unless issue.assignable_users.include?(messenger.user)
       if messenger.timer_running?
         if issue != messenger.issue
           messenger.timer_finish
@@ -76,7 +81,7 @@ class IssuesMessenger < RedmineMessenger::Base
         status(messenger, params)
       end
     else
-      ll(messenger.language, :messenger_command_timers_issue_not_found)
+      ll(messenger.language, :messenger_command_timers_issue_not_found, {})
     end
   end
   
@@ -89,7 +94,7 @@ class IssuesMessenger < RedmineMessenger::Base
         ll(messenger.language, :messenger_command_timers_not_resumed, :issue => messenger.issue.subject)
       end
     else
-      ll(messenger.language, :messenger_command_timers_not_running)
+      ll(messenger.language, :messenger_command_timers_not_running, {})
     end
   end
   
@@ -107,16 +112,17 @@ class IssuesMessenger < RedmineMessenger::Base
         end
       end
     else
-      ll(messenger.language, :messenger_command_timers_not_running)
+      ll(messenger.language, :messenger_command_timers_not_running, {})
     end
   end
   
   def cancel(messenger, params = {})
     if messenger.timer_running?
+      subject = messenger.issue.subject
       messenger.timer_cancel
-      ll(messenger.language, :messenger_command_timers_cancelled, :issue => messenger.issue.subject)
+      ll(messenger.language, :messenger_command_timers_cancelled, :issue => subject)
     else
-      ll(messenger.language, :messenger_command_timers_not_running)
+      ll(messenger.language, :messenger_command_timers_not_running, {})
     end
   end
   
@@ -129,7 +135,7 @@ class IssuesMessenger < RedmineMessenger::Base
         ll(messenger.language, :messenger_command_timers_not_finished, :issue => issue.subject)
       end
     else
-      ll(messenger.language, :messenger_command_timers_not_running)
+      ll(messenger.language, :messenger_command_timers_not_running, {})
     end
   end
   
@@ -138,20 +144,20 @@ class IssuesMessenger < RedmineMessenger::Base
       messenger.timer_add_note(params[:note])
       ll(messenger.language, :messenger_command_timers_noted, :issue => messenger.issue.subject)
     else
-      ll(messenger.language, :messenger_command_timers_not_running)
+      ll(messenger.language, :messenger_command_timers_not_running, {})
     end
   end
   
   def status(messenger, params = {})
     if params[:issue_id] and params[:issue_id] > 0 and messenger.issue_id != params[:issue_id]
       if issue = Issue.find_by_id(params[:issue_id])
-        return ll(messenger.language, :messenger_command_issue_not_assignable_user) unless issue.assignable_users.include?(messenger.user)
+        return ll(messenger.language, :messenger_command_issue_not_assignable_user, {}) unless issue.assignable_users.include?(messenger.user)
         stats = stats_for_issue(issue, messenger.user_id)
         responce = ll(messenger.language, :messenger_command_timers_not_running_for_that_issue, :issue => issue.subject) << "\n"
         responce << status_for_issue(messenger, stats)
         responce
       else
-        ll(messenger.language, :messenger_command_timers_issue_not_found)
+        ll(messenger.language, :messenger_command_timers_issue_not_found, {})
       end
     else
       if messenger.timer_running?
@@ -164,7 +170,7 @@ class IssuesMessenger < RedmineMessenger::Base
         responce << status_for_issue(messenger, stats)
         responce
       else
-        ll(messenger.language, :messenger_command_timers_not_running)
+        ll(messenger.language, :messenger_command_timers_not_running, {})
       end
     end
   end

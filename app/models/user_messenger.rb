@@ -45,7 +45,7 @@ class UserMessenger < ActiveRecord::Base
     entry.user = self.user
     entry.issue = self.issue
     entry.project = self.issue.project if self.issue.project_id
-    entry.activity = Enumeration.find(:first, :conditions => {:opt => "ACTI"})
+    entry.activity = Enumeration.find(:first, :conditions => {:type => "TimeEntryActivity"})
     entry.spent_on = Time.now.to_date
     entry.comments = self.timer_note unless self.timer_note.blank?
     entry.hours = timer_to_hours
@@ -161,7 +161,8 @@ class UserMessenger < ActiveRecord::Base
   def add_note_if_not_blank(note)
     unless note.blank?
       self.timer_note ||= ""
-      self.timer_note << note << "\n"
+      self.timer_note += note
+      self.timer_note += "\n"
     end
   end
   

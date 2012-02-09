@@ -5,7 +5,7 @@ en:
   messenger_view_label_configuration: "Configuration"
   messenger_view_label_help: "Help"
 
-  # verification
+# verification
 
   messenger_view_notice_please_verify: "Please verify your messenger account with code is {{verification_code}}."
 
@@ -19,7 +19,7 @@ en:
 
   messenger_welcome_message: "Your JID has been registered at Redmine Messenger. Please add this contact to your list and send your verification code."
 
-  # form
+# form
 
   field_messenger: "JID"
   field_resume_when_become_online: "Resume timer when become online"
@@ -29,10 +29,10 @@ en:
   field_issue_status_when_finishing_timer_with_full_ratio: "Change status when finishing timer with ratio 100%"
   field_messenger_notifications: "Send notification via messenger"
   field_assigning_issue_when_starting_timer: "Assign issue when starting timer"
-      
+     
   messenger_options_statuses_dont_change: "don't change"
 
-  # command: issues
+# command: issues
 
   messenger_command_issue_not_assigned_to_you: "Operation not permitted, because issue is not assigned to you."
   messenger_command_issues_found: "Found {{found}} issues."
@@ -50,7 +50,7 @@ en:
   messenger_command_assing_not_assignable_user: "Issue cannot be assignet to user {{login}}."
   messenger_command_issue_not_assignable_user: "Operation not permitted, because you don't have proper rights."
  
-  # command: timers
+# command: timers
    
   messenger_command_timers_issue_not_found: "Issue can't be found."
   messenger_command_timers_resumed: "Timer for issue '{{issue}}' has been resumed."
@@ -72,7 +72,7 @@ en:
   messenger_command_timers_resumed_because_of_status_change: "Timer for issue '{{issue}}' has been resumed."
   messenger_command_timers_paused_because_of_status_change: "Timer for issue '{{issue}}' has been paused."
 
-  # help
+# help
 
   messenger_view_help: "Messenger plugin allows you to communicate with Redmine via instant messenger (jabber).<br/><br/>
 Set your jid (jabber id) in the form on the left and configure account. After saving you should receive verification code and the welcome message to your jabber account. Add Redmine account to your buddy and send him verification code. Your registration is complete by now.<br/><br/>
@@ -97,7 +97,10 @@ type 'help' to get commands list. All commands are listed below.
   messenger_help_group_general: "General"
 
   messenger_help_group_issues: "Issues"
+  messenger_help_group_updates: "Status Updates"
 
+  messenger_help_command_update_short: "Update Your status."
+  messenger_help_command_list_short: "List status messages of all users."
   messenger_help_command_issue_short: "Show information about given issue."
   messenger_help_command_assign_short: "Assign issue to given user."
   messenger_help_command_issues_short: "Show all issues."
@@ -125,3 +128,4 @@ type 'help' to get commands list. All commands are listed below.
   messenger_help_command_pause_long: "Pause your running timer. Add command if given."
   messenger_help_command_resume_long: "Resume your paused timer. Add command if given."
   messenger_help_command_cancel_long: "Cancel your running timer."
+

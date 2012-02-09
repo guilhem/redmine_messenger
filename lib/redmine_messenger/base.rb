@@ -1,3 +1,4 @@
+#require 'vendor/plugins/redmine_messenger/lib/redmine_messenger/i18n_patch.rb'
 module RedmineMessenger
   class Base
 
