@@ -6,7 +6,7 @@ module RedmineMessenger
         super(config)
 	@logger = logger
       end
-    
+
     end
   end
 end
